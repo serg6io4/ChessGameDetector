@@ -13,6 +13,7 @@ def detectar_lineas(imagen):
     
     return lineas
 
+#Seguimos los pasos para detectar figuras con OpenCV
 def detectar_figuras(imagen, lineas):
     # Crear una imagen en blanco del mismo tamaño que la imagen original
     mascara = np.zeros_like(imagen)
@@ -29,14 +30,14 @@ def detectar_figuras(imagen, lineas):
     contornos, _ = cv2.findContours(gris, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
     return contornos
-
+#Simplemente vamos a iterar sobre los contornos detectados, recortarlos y mostrarlos
 def mostrar_figuras_recortadas(imagen, contornos):
     # Mostrar únicamente las figuras recortadas que tienen una altura y longitud similares
     for contorno in contornos:
         x, y, w, h = cv2.boundingRect(contorno)
         figura_recortada = imagen[y:y+h, x:x+w]
         
-        if abs(w - h) <= 100:  # Comparar el ancho y largo de la figura recortada
+        if abs(w - h) <= 120:  # Comparar el ancho y largo de la figura recortada
             # Mostrar la figura recortada si el ancho y largo son aproximadamente iguales
             cv2.imshow('Figura Recortada', figura_recortada)
             cv2.waitKey(0)
@@ -44,7 +45,7 @@ def mostrar_figuras_recortadas(imagen, contornos):
     cv2.destroyAllWindows()
 
 # Cargar la imagen de entrada
-imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura2.jpg')
+imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura3.jpg')
 
 # Detectar líneas utilizando la transformada de Hough
 lineas = detectar_lineas(imagen)
