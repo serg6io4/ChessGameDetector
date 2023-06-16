@@ -1,7 +1,7 @@
 import cv2
 
 # Cargar la imagen del tablero de ajedrez
-imagen_tablero = cv2.imread('C:\\Users\\sergi\\Desktop\\imagenes\\imagen40.jpg')
+imagen_tablero = cv2.imread('C:\\Users\\sergi\\Desktop\\imagenes\\imagen60.jpg')
 
 # Obtener las dimensiones de la imagen
 alto, ancho, _ = imagen_tablero.shape
@@ -25,7 +25,7 @@ for fila in range(8):
         # Calculo el nombre de la casilla en el orden correcto(por ejemplo, A8, B8,C8, ... y sucesivos)
         letra_columna = chr(65 + columna)
         numero_fila = str(8 - fila)
-        nombre_archivo = f'2j{letra_columna}{numero_fila}.jpg'#para darle un nombre antes de se guardada por cv2
+        nombre_archivo = f'5b{letra_columna}{numero_fila}.jpg'#para darle un nombre antes de se guardada por cv2
         
         # Guardo la casilla como una imagen separada
         cv2.imwrite(nombre_archivo, casilla)
