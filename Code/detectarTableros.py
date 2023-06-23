@@ -2,14 +2,16 @@ import cv2
 import numpy as np
 
 def detectar_lineas(imagen):
-    #Aplicar antes un filtro gaussiano
-    gaussian = cv2.GaussianBlur(imagen,(5,5),0)
+    #Quitar/reducir ruido de la imagen
+    gaussian = cv2.GaussianBlur(imagen, (5,5), 0)
     # Convertir la imagen a escala de grises
-    gris = cv2.cvtColor(gaussian, cv2.COLOR_BGR2GRAY)
-    
+    gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+    cv2.imshow("gris", gris)
+    cv2.waitKey(0)
     # Aplicar la detección de bordes mediante el algoritmo de Canny
     bordes = cv2.Canny(gris, 150, 200, apertureSize=3)
-    
+    cv2.imshow("bordes", bordes)
+    cv2.waitKey(0)
     # Aplicar la transformada de Hough para detectar líneas
     lineas = cv2.HoughLinesP(bordes, 1, np.pi/180, threshold=250, minLineLength=100, maxLineGap=10)
     
@@ -33,27 +35,26 @@ def detectar_figuras(imagen, lineas):
     
     return contornos
 #Simplemente vamos a iterar sobre los contornos detectados, recortarlos y mostrarlos
-def mostrar_figuras_recortadas(imagen, contornos):
+def tablero_recortado(imagen, contornos):
     # Mostrar únicamente las figuras recortadas que tienen una altura y longitud similares
     for contorno in contornos:
         x, y, w, h = cv2.boundingRect(contorno)
-        figura_recortada = imagen[y:y+h, x:x+w]
+        imagen_recortada = imagen[y:y+h, x:x+w]
         
-        if abs(w - h) <= 110:  # Comparar el ancho y largo de la figura recortada
+        if abs(w - h) <= 120:  # Comparar el ancho y largo de la figura recortada
             # Mostrar la figura recortada si el ancho y largo son aproximadamente iguales
-            cv2.imshow('Figura Recortada', figura_recortada)
-            cv2.waitKey(0)
+            return imagen_recortada
         
-    cv2.destroyAllWindows()
+    
 
 # Cargar la imagen de entrada
-imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura6.jpg')
+#imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura6.jpg')
 
 # Detectar líneas utilizando la transformada de Hough
-lineas = detectar_lineas(imagen)
+#lineas = detectar_lineas(imagen)
 
 # Detectar las figuras geométricas a partir de las líneas
-contornos = detectar_figuras(imagen, lineas)
+#contornos = detectar_figuras(imagen, lineas)
 
 # Mostrar las regiones recortadas de las figuras geométricas
-mostrar_figuras_recortadas(imagen, contornos)
+#mostrar_figuras_recortadas(imagen, contornos)
