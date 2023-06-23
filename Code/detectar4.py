@@ -2,8 +2,10 @@ import cv2
 import numpy as np
 
 def detectar_lineas(imagen):
+    #Aplicar antes un filtro gaussiano
+    gaussian = cv2.GaussianBlur(imagen,(5,5),0)
     # Convertir la imagen a escala de grises
-    gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+    gris = cv2.cvtColor(gaussian, cv2.COLOR_BGR2GRAY)
     
     # Aplicar la detección de bordes mediante el algoritmo de Canny
     bordes = cv2.Canny(gris, 150, 200, apertureSize=3)
@@ -37,7 +39,7 @@ def mostrar_figuras_recortadas(imagen, contornos):
         x, y, w, h = cv2.boundingRect(contorno)
         figura_recortada = imagen[y:y+h, x:x+w]
         
-        if abs(w - h) <= 180:  # Comparar el ancho y largo de la figura recortada
+        if abs(w - h) <= 110:  # Comparar el ancho y largo de la figura recortada
             # Mostrar la figura recortada si el ancho y largo son aproximadamente iguales
             cv2.imshow('Figura Recortada', figura_recortada)
             cv2.waitKey(0)
@@ -45,7 +47,7 @@ def mostrar_figuras_recortadas(imagen, contornos):
     cv2.destroyAllWindows()
 
 # Cargar la imagen de entrada
-imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura5.jpg')
+imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura6.jpg')
 
 # Detectar líneas utilizando la transformada de Hough
 lineas = detectar_lineas(imagen)

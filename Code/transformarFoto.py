@@ -12,9 +12,9 @@ def obtener_coordenadas(event, x, y, flags, param):
         coordenadas.append((x, y))
         contador_clics += 1
         if contador_clics == 4:
-            cv2.destroyAllWindows()
+            cv2.destroyWindow('Imagen')
 
-#Aquí ordeno los puntos porque en el caso que le pase valores intercambiado, la transformación no se puede llevar a cabo
+# Aquí ordeno los puntos porque en el caso que le pase valores intercambiados, la transformación no se puede llevar a cabo
 def ordenar_puntos(puntos):
     puntos = np.array(puntos, dtype=np.float32)
     suma_puntos = puntos.sum(axis=1)
@@ -44,9 +44,8 @@ def aplicar_Transformacion(coordenadas, ancho, alto):
     return imagen_transformada
 
 # Esto es para cargar la imagen y hacerla de un tamaño menor para poder verla antes de aplicar los puntos
-imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\foto2.jpg')
+imagen = cv2.imread('C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\foto1.jpg')
 imagen = cv2.resize(imagen, (600, 600))
-
 
 cv2.namedWindow('Imagen')
 cv2.setMouseCallback('Imagen', obtener_coordenadas)
@@ -60,15 +59,18 @@ while True:
 
     # Salgo si he puesto los 4 puntos
     if contador_clics == 4:
+        cv2.destroyWindow('Imagen')
         break
 
     # Salgo si presiono la tecla 'Esc'
     if cv2.waitKey(1) == 27:
         break
 
-imagenTransf = aplicar_Transformacion( ordenar_puntos(coordenadas), 800, 800)
+imagenTransf = aplicar_Transformacion(ordenar_puntos(coordenadas), 600, 600)
 
 # Muestro la imagen
 cv2.imshow('Imagen Transformada', imagenTransf)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
