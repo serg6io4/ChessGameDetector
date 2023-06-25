@@ -69,10 +69,10 @@ def procesar_imagen(ruta_imagen):
     return imagen_transformada
 
 #Cargamos la ruta de la imagen y se la pasamos a procesar
-ruta_imagen = 'C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\Captura4.jpg'
+ruta_imagen = 'C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\foto2.jpg'
 imagen_procesada = procesar_imagen(ruta_imagen)
-#Detectamos las líneas de la imagen
-lineas = detectar_lineas(imagen_procesada)
+#Detectamos las líneas de la imagen, el modo a TRUE es para que nos refiramos a una foto
+lineas = detectar_lineas(imagen_procesada, True)
 #Detectamos los contornos mediante una máscara y las líneas obtenidas
 contornos = detectar_figuras(imagen_procesada, lineas)
 #Obtenemos la imagen del tablero recortado y lo mostramos
