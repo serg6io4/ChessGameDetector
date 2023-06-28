@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-from detectarTableros import detectar_lineas, detectar_figuras, tablero_recortado
+from detectarTableros import recortarTableros
 from recortarTablero import recortar
-
+from recortarFoto import recortarFoto
 def obtener_coordenadas(event, x, y, flags, param):
     #Para obtener las coordenadas haciendo click en las diferentes esquinas del tablero
     global contador_clics, coordenadas
@@ -42,7 +42,7 @@ def procesar_imagen(ruta_imagen):
 
     # Cargar la imagen
     imagen = cv2.imread(ruta_imagen)
-    imagen = cv2.resize(imagen, (700, 700))
+    imagen = cv2.resize(imagen, (600, 600))
     # Variables para almacenar las coordenadas y el contador de clics
     coordenadas = []
     contador_clics = 0
@@ -70,16 +70,16 @@ def procesar_imagen(ruta_imagen):
 
 #Cargamos la ruta de la imagen y se la pasamos a procesar
 ruta_imagen = 'C:\\Users\\sergi\\Desktop\\ProyectoChess\\Pictures\\foto2.jpg'
+esFoto = True
 imagen_procesada = procesar_imagen(ruta_imagen)
-#Detectamos las líneas de la imagen, el modo a TRUE es para que nos refiramos a una foto
-lineas = detectar_lineas(imagen_procesada, True)
-#Detectamos los contornos mediante una máscara y las líneas obtenidas
-contornos = detectar_figuras(imagen_procesada, lineas)
-#Obtenemos la imagen del tablero recortado y lo mostramos
-imagen_recortada = tablero_recortado(imagen_procesada, contornos)
-cv2.imshow("Tablero",imagen_recortada)
-cv2.waitKey(0)
+if esFoto:
+    recortarFoto(imagen_procesada, 20)
+    #recortar(imagen_recortada)
+else:
+    recortarTableros(imagen_procesada)
+    #recortar(imagen_recortada)
 
-#Quitar el # para la extracción de pieza por pieza del tablero
-#recortar(imagen_recortada)
+
+
+
 
